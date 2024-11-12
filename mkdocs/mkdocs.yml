@@ -1,0 +1,44 @@
+site_name: Microservices Example
+site_author: "Jaakko Vanhala <jaakko.vanhala@gmail.com>"
+
+theme:
+  name: material
+  features:
+    - content.code.copy     # add copy button to code blocks
+    - content.code.annotate # add annotation support to code blocks
+  # Day and night mode
+  palette:
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  docs_dir: [docs]
+
+plugins: 
+  - mkdocstrings
+  
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.emoji
+  - pymdownx.tasklist
+
+nav:
+  - Front page: index.md
+  - Stack Class: stack.md
+  - Stack API: stack-api.md
+  - Random Jokes API: random-jokes-api.md
+  - Ollama API: ollama-api.md
+
+# TODO: Replace the copyright with correct. Also add LICENCE file. Template included.
+copyright: |
+  Copyright &copy; 2024 <a href="mailto:jaakko.vanhala@gmail.com">Jaakko Vanhala</a>. All rights reserved. <br>
+  This project is licensed under the <a href="https://opensource.org/license/mit">MIT</a> License. See the LICENSE file for details.
+

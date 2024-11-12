@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pytest
+mkdocs
+mkdocs-material
+mkdocstrings-python
+mkdocs
+langchain_ollama

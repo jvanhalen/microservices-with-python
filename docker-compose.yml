@@ -1,0 +1,74 @@
+services:
+# Ollama Server
+  ollama-server:
+# Replace with the actual Ollama image if different
+    image: ollama/ollama:latest  
+    container_name: ollama-server
+    environment:
+# Adjust this depending on how you set up Ollama
+# Want GPU support? https://docs.docker.com/compose/how-tos/gpu-support/
+      - OLLAMA_MODELS=/models
+    volumes:
+# Persistent storage for models, i.e. the loaded modules are copied to local project directory
+      - ./ollama-models:/models
+    ports:
+      - 11434:11434
+    networks:
+      - microservices-network
+
+# Ollama Service
+  ollama-service:
+# Replace with the actual Ollama image if different
+    build: ./app/ollama
+    container_name: ollama-service
+    ports:
+# Expose port for Ollama’s API service
+      - "8003:8000"
+    networks:
+      - microservices-network
+    depends_on:
+      - ollama-server
+
+# Random Jokes App
+  randomjokes-service:
+# Replace with the actual Jokes App image
+    container_name: randomjokes-service
+    build: ./app/jokes
+    ports:
+# Adjust if your app uses a different port
+      - "8002:8000"  
+    environment:
+      - APP_ENV=production
+    networks:
+      - microservices-network
+
+  # Stack App
+  stack-service:
+# Replace with the actual Stack App image
+    container_name: stack-service
+    build: ./app/stack  
+    ports:
+# Port for the stack app API
+      - "8001:8000"  
+    environment:
+      - APP_ENV=production
+    networks:
+      - microservices-network
+
+  mkdocs-service:
+    container_name: mkdocs-service
+    build: ./mkdocs
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./mkdocs:/docs
+      - ./app:/app/app
+    networks:
+      - microservices-network
+networks:
+  microservices-network:
+    external: true
+
+# Initialize docker swarm for this
+# docker swarm init
+# docker network create -d overlay microservices-network --attachable
